@@ -578,7 +578,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          $(div(captionClass, div(captionWrapClass, dataFrame.caption))).appendTo($frame);
+          if (dataFrame.caption.substring(0, 8) != "eyefact:") {
+            $(div(captionClass, div(captionWrapClass, wordWrap(dataFrame.caption, that.options)))).appendTo($frame);
+          } else {
+            dataFrame.caption = '<p class="eye-fact-fact"><span class="eye-fact-title">Did you know..</span><br>' + dataFrame.caption.slice(8) + '</p>';
+            $(div(captionClass, div(captionWrapClass, dataFrame.caption))).addClass('eye-fact').appendTo($frame);
+          }
         }
 
         dataFrame.video && $frame
